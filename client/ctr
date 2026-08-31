@@ -1,0 +1,4 @@
+ctr -n k8s.io images list
+ctr -n k8s.io images pull registry.k8s.io/php
+ctr -n k8s.io images export controller.tar registry.k8s.io/kube-controller-manager:v1.34.10
+ctr -n k8s.io images import controller.tar
