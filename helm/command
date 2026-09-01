@@ -1,6 +1,18 @@
-helm repo list
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update 
 helm search repo bitnami
+helm repo list
+helm search repo bitnami 
+helm search repo bitnami/postgresql
+############ Helm install Chart 
+helm install --help
+helm show values bitnami/nginx-ingress-controller > values.yaml
+helm install my-ingress bitnami/nginx-ingress-controller --namespace ingress-system --create-namespace -f values.yaml 
+helm upgrade --install  my-ingress bitnami/nginx-ingress-controller --namespace ingress-system --create-namespace -f values.yaml 
+helm install my-ingress bitnami/nginx-ingress-controller --dry-run --debug
+helm install my-ingress bitnami/nginx-ingress-controller --wait
+helm list -A
 
-
+############ How do I download a Helm chart?
+helm pull bitnami/nginx-ingress-controller
+helm pull bitnami/nginx-ingress-controller --untar
