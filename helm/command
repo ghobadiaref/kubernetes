@@ -4,6 +4,8 @@ helm search repo bitnami
 helm repo list
 helm search repo bitnami 
 helm search repo bitnami/postgresql
+helm list  ## list of helm release 
+helm list -A ## All Namespace 
 ############ Helm install Chart 
 helm install --help
 helm show values bitnami/nginx-ingress-controller > values.yaml
