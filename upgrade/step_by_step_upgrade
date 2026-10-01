@@ -1,0 +1,45 @@
+###########################################################################################################
+########################## Cluster Configuration: 1 Master Node, 2 Worker Nodes ###########################
+###########################################################################################################
+Note: The upgrade process must begin with the Master nodes, followed by the Worker nodes.
+Note: The upgrade process must be performed sequentially, one node at a time, to avoid downtime.
+Note: Non-core Kubernetes component Pods must be upgraded separately.
+Note: Since core components are static Pods, they will not be evicted even after draining the node. Therefore, the API server must be gracefully stopped before starting the upgrade to prevent incoming API requests.
+Unhold the kubeadm, kubectl, and kubelet packages.
+		############### Control plain 1 ###################
+Note: Since the `kubeadm upgrade plan` command inspects the entire cluster, it requires access to the `admin.conf` file.
+apt update 
+apt-cache madison kubeadm
+apt-get install -y kubeadm=1.36.5-1.1
+kubeadm version 
+####
+Note: The `kubeadm upgrade plan` command does not apply any changes; it only performs a general assessment of the cluster status.
+Note: **`kubeadm` will identify the next available version and perform a series of compatibility and precondition checks.**
+kubeadm upgrade plan
+####
+kubeadm upgrade apply v1.36.x
+Note: After applying the control plane upgrade via `kubeadm upgrade apply`, the kubelet components remain on the previous version and must be upgraded separately.
+#####
+apt-get install -y kubelet=1.36.5-1.1
+####
+apt-get install -y kubectl=1.36.5-1.1
+systemctl daemon-reload
+systemctl restart kubelet.service
+####
+apt-mark hold kubeadm 
+kubectl get nodes
+		############### Control plain 2 ###################
+For additional control plane nodes, use the "kubeadm upgrade node" command.
+
+		############### worker 1 ###################
+apt-get install -y kubectl=1.36.5-1.1
+apt-get install -y kubelet=1.36.5-1.1
+apt-get install -y kubeadm=1.36.5-1.1
+systemctl daemon-reload
+systemctl restart kubelet.service
+		############### worker 2 ###################
+apt-get install -y kubectl=1.36.5-1.1
+apt-get install -y kubelet=1.36.5-1.1
+apt-get install -y kubeadm=1.36.5-1.1
+systemctl daemon-reload
+systemctl restart kubelet.service
