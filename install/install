@@ -1,1 +1,5 @@
 The `cluster.yml` file is the main Ansible playbook that orchestrates the deployment and configuration of the Kubernetes cluster.
+ssh-keygen 
+ssh-copy-id 
+cat requirements.txt ==> install requirement with pip 
+
