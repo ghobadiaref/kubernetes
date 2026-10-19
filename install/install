@@ -2,4 +2,15 @@ The `cluster.yml` file is the main Ansible playbook that orchestrates the deploy
 ssh-keygen 
 ssh-copy-id 
 cat requirements.txt ==> install requirement with pip 
-
+apt install python3-pip
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+ansible-playbook -i inventory 
+#############################################
+/usr/local/bin/nerdctl -n k8s.io pull registry.k8s.io/pause:3.10.2
+/usr/local/bin/nerdctl -n k8s.io images | grep pause
+/usr/local/bin/nerdctl -n k8s.io save -o /tmp/pause-3.10.2.tar registry.k8s.io/pause:3.10.2
+scp /tmp/pause-3.10.2.tar root@185.204.170.5:/tmp/
+/usr/local/bin/nerdctl -n k8s.io load -i /tmp/pause-3.10.2.tar
+/usr/local/bin/nerdctl -n k8s.io images | grep pause
