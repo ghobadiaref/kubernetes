@@ -1,0 +1,41 @@
+#prerequisites: Initialize and create the zpool from underlying physical/virtual disks.
+apt-get install zfsutils-linux
+zpool create zfspv-pool /dev/sdb
+zpool status 
+
+#install OpenEBS: Expose/assign the zpool to ZFS to handle datasets, compression, and replication.
+kubectl label node node4.cando.ac openebs.io/nodeid=node4 
+kubectl label node node5.cando.ac openebs.io/nodeid=node5 
+helm repo add zfs-localpv  https://openebs.github.io/zfs-localpv
+helm install openebs --namespace openebs  zfs-localpv/zfs-localpv --create-namespace
+
+#Creating a StorageClass
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-zfspv
+parameters:
+  recordsize: "128k"
+  compression: "off"
+  dedup: "off"
+  fstype: "zfs"
+  poolname: "zfspv-pool"
+provisioner: zfs.csi.openebs.io
+#######################
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: my-pvc
+spec:
+  storageClassName: openebs-zfspv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+#######################
+kubectl get pvc 
+kubectl get pv 
+kubectl describe pvc 
+#######################
+kubectl patch storageclass openebs-zfspv -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}

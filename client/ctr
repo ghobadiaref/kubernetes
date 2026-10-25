@@ -12,3 +12,6 @@ scp /tmp/pause-3.10.2.tar root@185.204.170.5:/tmp/
 /usr/local/bin/nerdctl -n k8s.io images --format '{{.Repository}}:{{.Tag}}'
 nerdctl -n k8s.io images   --format '{{.Repository}}:{{.Tag}}' |   grep -v '^<none>:<none>$' |   sort -u
 nerdctl --namespace k8s.io image inspect   registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+##################################
+crictl images
+crictl pull 
