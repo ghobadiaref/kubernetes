@@ -1,0 +1,2 @@
+kubectl patch ingressclass nginx --type=merge -p '{"metadata": {"annotations":{"ingressclass.kubernetes.io/is-default-class":"true"}}}'
+kubectl get ingressclass 
