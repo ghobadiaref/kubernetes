@@ -14,6 +14,7 @@ helm upgrade --install  my-ingress bitnami/nginx-ingress-controller --namespace 
 helm install my-ingress bitnami/nginx-ingress-controller --dry-run --debug
 helm install my-ingress bitnami/nginx-ingress-controller --wait
 helm list -A
+helm uninstall kyverno -n kyverno
 
 ############ How do I download a Helm chart?
 helm pull bitnami/nginx-ingress-controller

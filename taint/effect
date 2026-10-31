@@ -1,0 +1,13 @@
+kubectl get nodes --show-labels
+kubectl get nodes --show-labels -l node-role.kubernetes.io/worker=worker
+#######################################################
+pod Toleration : 
+spec.template.spec
+      toleratons:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
+########################################################
+delete taint node control plane : 
+kubectl taint nodes node1 node-role.kubernetes.io/control-plane:NoSchedule-
+kubectl get nodes -o custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
