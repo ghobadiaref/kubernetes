@@ -1,0 +1,21 @@
+calicoctl get nodes -o wide 
+calicoctl node status 
+calicoctl get workloadendpoints
+calicoctl get node node1.cando.ac -o yaml
+calicoctl get bgppeers
+calicoctl get bgppeer -o yaml
+calicoctl get bgpconfig
+######################## IP POOL ##################
+calicoctl get ippools 
+calicoctl get ippool default-pool -o yaml
+calicoctl ipam show --show-blocks
+calicoctl ipam show --ip=10.233.96.128
+######################## NetwrokPolicy  ############
+calicoctl get networkpolicy -n default
+calicoctl get globalnetworkpolicy
+calicoctl get networkpolicy allow-backend -n default -o yaml
+calicoctl get hostendpoints
+calicoctl get profiles
+######################## Felix  ############
+calicoctl get felixconfiguration
+calicoctl get felixconfiguration default -o yaml
