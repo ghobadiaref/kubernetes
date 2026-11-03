@@ -1,1 +1,4 @@
 kubectl get ippool -o yaml
+kubectl get crd | grep -i calico
+kubectl get bgpconfigurations.crd.projectcalico.org -o yaml
+kubectl get felixconfigurations.crd.projectcalico.org -o yaml ===> networkType and Ebpfmode 
