@@ -1,4 +1,8 @@
 controller:
+  kind: daemonset 
+  service:
+    create: true
+    type: ClusterIP 
   hostNetwork: false
   hostPort:
     enable: false

@@ -1,1 +1,4 @@
 helm install ingress oci://ghcr.io/nginx/charts/nginx-ingress --namespace ingress --create-namespace -f values.yaml 
+helm upgrade --install ingress oci://ghcr.io/nginx/charts/nginx-ingress --namespace ingress --create-namespace -f values.yaml 
+kubectl get svc -n ingress 
+kubectl ingressclass 
