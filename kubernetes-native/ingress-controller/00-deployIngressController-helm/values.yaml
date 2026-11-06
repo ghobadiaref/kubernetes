@@ -1,0 +1,17 @@
+controller:
+  hostNetwork: false
+  hostPort:
+    enable: false
+    http: 80
+    https: 443
+  containerPort:
+    http: 80
+    https: 443
+prometheus:
+  create: true
+  service:
+    create: true
+    labels:
+      service: "nginx-ingress-prometheus-service"
+  serviceMonitor:
+    create: true

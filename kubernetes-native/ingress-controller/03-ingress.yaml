@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-deploy
+  annotations:
+    nginx.ingress.kubernetes.io/use-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: aref.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: svc-vote(/|$)(.*)
+            port:
+              number: 80
+        path: /vote
+        pathType: Prefix
