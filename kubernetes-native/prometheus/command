@@ -1,0 +1,4 @@
+kubectl get crd
+kubectl get servicemonitors -A
+
+
