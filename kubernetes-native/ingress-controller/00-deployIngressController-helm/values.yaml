@@ -1,21 +1,27 @@
 controller:
   kind: daemonset 
+
   service:
     create: true
     type: ClusterIP 
-  hostNetwork: false
+
+  hostNetwork: true 
+  
   hostPort:
-    enable: false
+    enable: true 
     http: 80
-    https: 443
+
   containerPort:
     http: 80
     https: 443
+
 prometheus:
   create: true
+  port: 9113
   service:
     create: true
     labels:
       service: "nginx-ingress-prometheus-service"
+
   serviceMonitor:
     create: true
