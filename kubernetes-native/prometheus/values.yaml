@@ -17,3 +17,43 @@ prometheus:
     ingressClassName: nginx 
     hosts: 
       - prom.cando.ac 
+######################
+crds:
+  enabled: true
+  upgradeJob:
+    enabled: true 
+
+alertmanager:
+  enabled: true
+
+grafana:
+  enabled: true
+  defaultDashboardsEditable: true # if false bashad miad dar ezaye dashboardha configmap ijad mikonad ama true bashad dar DB khodesh save
+  ingress:
+    enabled: true 
+    ingressClassName: nginx
+    hosts:
+      - grafana.cando.ac
+
+kubelet:
+  enabled: true
+  namespace: kube-system
+
+prometheusOperator:
+  enabled: true
+
+prometheus:
+  enabled: true
+  ingress:
+    enabled: true 
+    ingressClassName: "nginx"
+    hosts:
+      - prometheus.cando.ac
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false 
+    podMonitorSelectorNilUsesHelmValues: false
+    retention: 10d
+    retentionSize:
+    logFormat: logfmt
+    logLevel: error
+
