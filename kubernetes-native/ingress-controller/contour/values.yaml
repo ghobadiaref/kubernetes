@@ -1,0 +1,15 @@
+#envoy:
+#  hostNetwork: true 
+#  useHostPort.http: 80 
+#  useHostPort.https: 443 
+metrics:
+  serviceMonitor: 
+    enables: true 
+    namespace: monitoring 
+envoy: 
+  service:
+    type: NodePort
+    nodePorts: 
+      http: "30080"
+      https: "30443"
+      metrics: "30802"

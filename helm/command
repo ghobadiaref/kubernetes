@@ -6,6 +6,7 @@ helm search repo bitnami
 helm search repo bitnami/postgresql
 helm list  ## list of helm release 
 helm list -A ## All Namespace 
+helm list -n contour 
 helm get values -n 
 ############ Helm install Chart 
 helm install --help
