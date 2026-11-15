@@ -1,5 +1,7 @@
 kubectl get ingress 
 kubectl get crd
+kubectl get prom-grafana -o yaml 
+kubectl get prom-kube-prometheus-stack-grafana-datasource -o yaml 
 kubectl get servicemonitors -A
 kubectl get prometheuses.monitoring.coreos.com -n monitoring # config prometheus ke operator oon ro mikhonenh 
 kubectl get clusterrolebindings.rbac.authorization.k8s.io | grep prometheus 
