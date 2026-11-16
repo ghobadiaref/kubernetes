@@ -6,5 +6,5 @@ kubectl get servicemonitors -A
 kubectl get prometheuses.monitoring.coreos.com -n monitoring # config prometheus ke operator oon ro mikhonenh 
 kubectl get clusterrolebindings.rbac.authorization.k8s.io | grep prometheus 
 kubectl get sa -n monitoring 
-
+kubectl get prometheusrules.monitoring.coreos.com -A # shamel Alerting Rule and Recording rule hast
 
