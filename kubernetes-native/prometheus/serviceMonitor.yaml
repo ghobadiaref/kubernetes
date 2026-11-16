@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: Namespace
+metadata: 
+  name: myjob
+  labels: 
+    app: myjob 
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: myjob
+  namespace: myjob 
+  labels:
+    app: myjob 
+spec:
+  selector: 
+    matchLabels: 
+      app: myjob
+  replicas: 1 
+  strategy: 
+    rollingUpdate: 
+      maxSurge: 25%
+      maxUnavailable: 25% 
+    type: RollingUpdate 
+  template:
+    metadata:
+      labels: 
+        app: myjob
+    spec: 
+      containers: 
+        - name: myjob
+	  image: nginx 
+	  imagePullPolicy: IfNotPresent 
+	  resources: 
+	    requests: 
+	      cpu: 100m 
+	      memory: 100Mi 
+	    limits: 
+	      cpu: 100m 
+	      memory: 100Mi 
+          ports: 
+	    - containerPort: 80 
+	      name: myjob 
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: myjob 
+  namespace: myjob 
+  labels:
+    app: myjob 
+spec: 
+  selector: 
+    app: myjob 
+  type: ClusterIP
+  ports:
+    - name: http 
+      protocol: TCP 
+      port: 80 
+      targetPort: 80 
+---
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  name: myjob
+  namespace: myjob 
+spec:
+  ingressClassName: contour 
+  rules: 
+    - host: "myjob.cando.ac"
+      http: 
+        paths:
+	  - pathType: prefix 
+	    path: "/"
+	    backend:
+	      service: 
+	        name: myjob 
+	        port: 
+		  number: 80
+	        
+---
+apiVersion: monitoring.coreos.com/v1 
+kind: ServiceMonitor
+metadata:
+  labels: 
+    app: myjob 
+  name: myjob 
+  namespace: myjob 
+spec:
+  endpoints:
+    - path: /metrics
+      port: http 
+      metricRelabelings:
+        - action: labeldrop 
+	  regex: (userid|exception)
+  jobLabel: myjob
+  namespaceSelector: 
+    matchNames: 
+      - myjob 
+  selector: 
+    matchLabels: 
+      app: myjob 
